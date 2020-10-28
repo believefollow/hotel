@@ -61,14 +61,6 @@ public class Employee implements Serializable {
     @JsonIgnoreProperties(value = "employees", allowSetters = true)
     private Employee manager;
 
-    /**
-     * Another side of the same relationship
-     */
-    @ApiModelProperty(value = "Another side of the same relationship")
-    @ManyToOne
-    @JsonIgnoreProperties(value = "employees", allowSetters = true)
-    private Department department;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -205,19 +197,6 @@ public class Employee implements Serializable {
 
     public void setManager(Employee employee) {
         this.manager = employee;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public Employee department(Department department) {
-        this.department = department;
-        return this;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

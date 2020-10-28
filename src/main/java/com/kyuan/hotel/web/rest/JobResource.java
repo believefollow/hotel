@@ -89,18 +89,12 @@ public class JobResource {
      * {@code GET  /jobs} : get all the jobs.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of jobs in body.
      */
     @GetMapping("/jobs")
-    public ResponseEntity<List<Job>> getAllJobs(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Job>> getAllJobs(Pageable pageable) {
         log.debug("REST request to get a page of Jobs");
-        Page<Job> page;
-        if (eagerload) {
-            page = jobRepository.findAllWithEagerRelationships(pageable);
-        } else {
-            page = jobRepository.findAll(pageable);
-        }
+        Page<Job> page = jobRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -114,7 +108,7 @@ public class JobResource {
     @GetMapping("/jobs/{id}")
     public ResponseEntity<Job> getJob(@PathVariable Long id) {
         log.debug("REST request to get Job : {}", id);
-        Optional<Job> job = jobRepository.findOneWithEagerRelationships(id);
+        Optional<Job> job = jobRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(job);
     }
 

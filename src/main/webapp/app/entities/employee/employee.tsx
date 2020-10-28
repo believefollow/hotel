@@ -125,9 +125,6 @@ export const Employee = (props: IEmployeeProps) => {
                   <th>
                     Manager <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    Department <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -147,7 +144,6 @@ export const Employee = (props: IEmployeeProps) => {
                     <td>{employee.salary}</td>
                     <td>{employee.commissionPct}</td>
                     <td>{employee.manager ? <Link to={`employee/${employee.manager.id}`}>{employee.manager.id}</Link> : ''}</td>
-                    <td>{employee.department ? <Link to={`department/${employee.department.id}`}>{employee.department.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${employee.id}`} color="info" size="sm">

@@ -1,4 +1,3 @@
-import { ITask } from 'app/shared/model/task.model';
 import { IEmployee } from 'app/shared/model/employee.model';
 
 export interface IJob {
@@ -6,7 +5,6 @@ export interface IJob {
   jobTitle?: string;
   minSalary?: number;
   maxSalary?: number;
-  tasks?: ITask[];
   employee?: IEmployee;
 }
 

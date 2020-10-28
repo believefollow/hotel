@@ -37,17 +37,6 @@ export const JobDetail = (props: IJobDetailProps) => {
             <span id="maxSalary">Max Salary</span>
           </dt>
           <dd>{jobEntity.maxSalary}</dd>
-          <dt>Task</dt>
-          <dd>
-            {jobEntity.tasks
-              ? jobEntity.tasks.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.title}</a>
-                    {jobEntity.tasks && i === jobEntity.tasks.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
           <dt>Employee</dt>
           <dd>{jobEntity.employee ? jobEntity.employee.id : ''}</dd>
         </dl>
