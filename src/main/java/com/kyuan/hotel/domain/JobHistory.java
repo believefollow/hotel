@@ -8,8 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.kyuan.hotel.domain.enumeration.Language;
-
 /**
  * A JobHistory.
  */
@@ -30,17 +28,9 @@ public class JobHistory implements Serializable {
     @Column(name = "end_date")
     private Instant endDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "language")
-    private Language language;
-
     @OneToOne
     @JoinColumn(unique = true)
     private Job job;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Department department;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -81,19 +71,6 @@ public class JobHistory implements Serializable {
         this.endDate = endDate;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public JobHistory language(Language language) {
-        this.language = language;
-        return this;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
     public Job getJob() {
         return job;
     }
@@ -105,19 +82,6 @@ public class JobHistory implements Serializable {
 
     public void setJob(Job job) {
         this.job = job;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public JobHistory department(Department department) {
-        this.department = department;
-        return this;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public Employee getEmployee() {
@@ -157,7 +121,6 @@ public class JobHistory implements Serializable {
             "id=" + getId() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", language='" + getLanguage() + "'" +
             "}";
     }
 }

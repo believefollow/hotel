@@ -7,8 +7,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Job.
@@ -32,13 +30,6 @@ public class Job implements Serializable {
 
     @Column(name = "max_salary")
     private Long maxSalary;
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JoinTable(name = "job_task",
-               joinColumns = @JoinColumn(name = "job_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
-    private Set<Task> tasks = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "jobs", allowSetters = true)
@@ -90,31 +81,6 @@ public class Job implements Serializable {
 
     public void setMaxSalary(Long maxSalary) {
         this.maxSalary = maxSalary;
-    }
-
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public Job tasks(Set<Task> tasks) {
-        this.tasks = tasks;
-        return this;
-    }
-
-    public Job addTask(Task task) {
-        this.tasks.add(task);
-        task.getJobs().add(this);
-        return this;
-    }
-
-    public Job removeTask(Task task) {
-        this.tasks.remove(task);
-        task.getJobs().remove(this);
-        return this;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public Employee getEmployee() {

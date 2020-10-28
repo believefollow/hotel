@@ -16,14 +16,6 @@
   ],
   "relationships": [
     {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "task",
-      "otherEntityRelationshipName": "job",
-      "relationshipName": "task",
-      "otherEntityField": "title",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "many-to-one",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "job",

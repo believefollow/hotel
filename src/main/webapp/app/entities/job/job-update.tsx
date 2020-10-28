@@ -7,8 +7,6 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ITask } from 'app/shared/model/task.model';
-import { getEntities as getTasks } from 'app/entities/task/task.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './job.reducer';
@@ -19,11 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IJobUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const JobUpdate = (props: IJobUpdateProps) => {
-  const [idstask, setIdstask] = useState([]);
   const [employeeId, setEmployeeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { jobEntity, tasks, employees, loading, updating } = props;
+  const { jobEntity, employees, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/job' + props.location.search);
@@ -36,7 +33,6 @@ export const JobUpdate = (props: IJobUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getTasks();
     props.getEmployees();
   }, []);
 
@@ -51,7 +47,6 @@ export const JobUpdate = (props: IJobUpdateProps) => {
       const entity = {
         ...jobEntity,
         ...values,
-        tasks: mapIdList(values.tasks),
       };
 
       if (isNew) {
@@ -100,26 +95,6 @@ export const JobUpdate = (props: IJobUpdateProps) => {
                 <AvField id="job-maxSalary" type="string" className="form-control" name="maxSalary" />
               </AvGroup>
               <AvGroup>
-                <Label for="job-task">Task</Label>
-                <AvInput
-                  id="job-task"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="tasks"
-                  value={jobEntity.tasks && jobEntity.tasks.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {tasks
-                    ? tasks.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.title}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="job-employee">Employee</Label>
                 <AvInput id="job-employee" type="select" className="form-control" name="employee.id">
                   <option value="" key="0" />
@@ -151,7 +126,6 @@ export const JobUpdate = (props: IJobUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  tasks: storeState.task.entities,
   employees: storeState.employee.entities,
   jobEntity: storeState.job.entity,
   loading: storeState.job.loading,
@@ -160,7 +134,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getTasks,
   getEmployees,
   getEntity,
   updateEntity,

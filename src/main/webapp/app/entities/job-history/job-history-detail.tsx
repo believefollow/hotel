@@ -35,14 +35,8 @@ export const JobHistoryDetail = (props: IJobHistoryDetailProps) => {
             <span id="endDate">End Date</span>
           </dt>
           <dd>{jobHistoryEntity.endDate ? <TextFormat value={jobHistoryEntity.endDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
-          <dt>
-            <span id="language">Language</span>
-          </dt>
-          <dd>{jobHistoryEntity.language}</dd>
           <dt>Job</dt>
           <dd>{jobHistoryEntity.job ? jobHistoryEntity.job.id : ''}</dd>
-          <dt>Department</dt>
-          <dd>{jobHistoryEntity.department ? jobHistoryEntity.department.id : ''}</dd>
           <dt>Employee</dt>
           <dd>{jobHistoryEntity.employee ? jobHistoryEntity.employee.id : ''}</dd>
         </dl>

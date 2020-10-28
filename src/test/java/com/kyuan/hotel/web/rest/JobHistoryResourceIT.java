@@ -24,7 +24,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.kyuan.hotel.domain.enumeration.Language;
 /**
  * Integration tests for the {@link JobHistoryResource} REST controller.
  */
@@ -38,9 +37,6 @@ public class JobHistoryResourceIT {
 
     private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Language DEFAULT_LANGUAGE = Language.FRENCH;
-    private static final Language UPDATED_LANGUAGE = Language.ENGLISH;
 
     @Autowired
     private JobHistoryRepository jobHistoryRepository;
@@ -65,8 +61,7 @@ public class JobHistoryResourceIT {
     public static JobHistory createEntity(EntityManager em) {
         JobHistory jobHistory = new JobHistory()
             .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE)
-            .language(DEFAULT_LANGUAGE);
+            .endDate(DEFAULT_END_DATE);
         return jobHistory;
     }
     /**
@@ -78,8 +73,7 @@ public class JobHistoryResourceIT {
     public static JobHistory createUpdatedEntity(EntityManager em) {
         JobHistory jobHistory = new JobHistory()
             .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE)
-            .language(UPDATED_LANGUAGE);
+            .endDate(UPDATED_END_DATE);
         return jobHistory;
     }
 
@@ -104,7 +98,6 @@ public class JobHistoryResourceIT {
         JobHistory testJobHistory = jobHistoryList.get(jobHistoryList.size() - 1);
         assertThat(testJobHistory.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testJobHistory.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-        assertThat(testJobHistory.getLanguage()).isEqualTo(DEFAULT_LANGUAGE);
     }
 
     @Test
@@ -139,8 +132,7 @@ public class JobHistoryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(jobHistory.getId().intValue())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGUAGE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
     
     @Test
@@ -155,8 +147,7 @@ public class JobHistoryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(jobHistory.getId().intValue()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.language").value(DEFAULT_LANGUAGE.toString()));
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
     }
     @Test
     @Transactional
@@ -180,8 +171,7 @@ public class JobHistoryResourceIT {
         em.detach(updatedJobHistory);
         updatedJobHistory
             .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE)
-            .language(UPDATED_LANGUAGE);
+            .endDate(UPDATED_END_DATE);
 
         restJobHistoryMockMvc.perform(put("/api/job-histories")
             .contentType(MediaType.APPLICATION_JSON)
@@ -194,7 +184,6 @@ public class JobHistoryResourceIT {
         JobHistory testJobHistory = jobHistoryList.get(jobHistoryList.size() - 1);
         assertThat(testJobHistory.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testJobHistory.getEndDate()).isEqualTo(UPDATED_END_DATE);
-        assertThat(testJobHistory.getLanguage()).isEqualTo(UPDATED_LANGUAGE);
     }
 
     @Test

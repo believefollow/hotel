@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
-import { IDepartment } from 'app/shared/model/department.model';
-import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -19,10 +17,9 @@ export interface IEmployeeUpdateProps extends StateProps, DispatchProps, RouteCo
 
 export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   const [managerId, setManagerId] = useState('0');
-  const [departmentId, setDepartmentId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { employeeEntity, employees, departments, loading, updating } = props;
+  const { employeeEntity, employees, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/employee');
@@ -34,7 +31,6 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
     }
 
     props.getEmployees();
-    props.getDepartments();
   }, []);
 
   useEffect(() => {
@@ -142,19 +138,6 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              <AvGroup>
-                <Label for="employee-department">Department</Label>
-                <AvInput id="employee-department" type="select" className="form-control" name="department.id">
-                  <option value="" key="0" />
-                  {departments
-                    ? departments.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/employee" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -175,7 +158,6 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   employees: storeState.employee.entities,
-  departments: storeState.department.entities,
   employeeEntity: storeState.employee.entity,
   loading: storeState.employee.loading,
   updating: storeState.employee.updating,
@@ -184,7 +166,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getEmployees,
-  getDepartments,
   getEntity,
   updateEntity,
   createEntity,

@@ -34,17 +34,6 @@
 
     <changeSet id="20201028072030-1-relations" author="jhipster">
 
-        <createTable tableName="job_task">
-            <column name="task_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="job_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="job_id, task_id" tableName="job_task"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 

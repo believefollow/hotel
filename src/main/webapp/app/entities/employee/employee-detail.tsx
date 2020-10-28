@@ -56,8 +56,6 @@ export const EmployeeDetail = (props: IEmployeeDetailProps) => {
           <dd>{employeeEntity.commissionPct}</dd>
           <dt>Manager</dt>
           <dd>{employeeEntity.manager ? employeeEntity.manager.id : ''}</dd>
-          <dt>Department</dt>
-          <dd>{employeeEntity.department ? employeeEntity.department.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

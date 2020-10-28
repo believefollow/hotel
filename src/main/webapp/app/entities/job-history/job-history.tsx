@@ -107,14 +107,8 @@ export const JobHistory = (props: IJobHistoryProps) => {
                   <th className="hand" onClick={sort('endDate')}>
                     End Date <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('language')}>
-                    Language <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th>
                     Job <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    Department <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     Employee <FontAwesomeIcon icon="sort" />
@@ -134,11 +128,7 @@ export const JobHistory = (props: IJobHistoryProps) => {
                       {jobHistory.startDate ? <TextFormat type="date" value={jobHistory.startDate} format={APP_DATE_FORMAT} /> : null}
                     </td>
                     <td>{jobHistory.endDate ? <TextFormat type="date" value={jobHistory.endDate} format={APP_DATE_FORMAT} /> : null}</td>
-                    <td>{jobHistory.language}</td>
                     <td>{jobHistory.job ? <Link to={`job/${jobHistory.job.id}`}>{jobHistory.job.id}</Link> : ''}</td>
-                    <td>
-                      {jobHistory.department ? <Link to={`department/${jobHistory.department.id}`}>{jobHistory.department.id}</Link> : ''}
-                    </td>
                     <td>{jobHistory.employee ? <Link to={`employee/${jobHistory.employee.id}`}>{jobHistory.employee.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

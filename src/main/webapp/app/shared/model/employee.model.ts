@@ -1,6 +1,5 @@
 import { Moment } from 'moment';
 import { IJob } from 'app/shared/model/job.model';
-import { IDepartment } from 'app/shared/model/department.model';
 
 export interface IEmployee {
   id?: number;
@@ -13,7 +12,6 @@ export interface IEmployee {
   commissionPct?: number;
   jobs?: IJob[];
   manager?: IEmployee;
-  department?: IDepartment;
 }
 
 export const defaultValue: Readonly<IEmployee> = {};

@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { IJob } from 'app/shared/model/job.model';
 import { getEntities as getJobs } from 'app/entities/job/job.reducer';
-import { IDepartment } from 'app/shared/model/department.model';
-import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './job-history.reducer';
@@ -22,11 +20,10 @@ export interface IJobHistoryUpdateProps extends StateProps, DispatchProps, Route
 
 export const JobHistoryUpdate = (props: IJobHistoryUpdateProps) => {
   const [jobId, setJobId] = useState('0');
-  const [departmentId, setDepartmentId] = useState('0');
   const [employeeId, setEmployeeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { jobHistoryEntity, jobs, departments, employees, loading, updating } = props;
+  const { jobHistoryEntity, jobs, employees, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/job-history');
@@ -38,7 +35,6 @@ export const JobHistoryUpdate = (props: IJobHistoryUpdateProps) => {
     }
 
     props.getJobs();
-    props.getDepartments();
     props.getEmployees();
   }, []);
 
@@ -112,40 +108,11 @@ export const JobHistoryUpdate = (props: IJobHistoryUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="languageLabel" for="job-history-language">
-                  Language
-                </Label>
-                <AvInput
-                  id="job-history-language"
-                  type="select"
-                  className="form-control"
-                  name="language"
-                  value={(!isNew && jobHistoryEntity.language) || 'FRENCH'}
-                >
-                  <option value="FRENCH">FRENCH</option>
-                  <option value="ENGLISH">ENGLISH</option>
-                  <option value="SPANISH">SPANISH</option>
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="job-history-job">Job</Label>
                 <AvInput id="job-history-job" type="select" className="form-control" name="job.id">
                   <option value="" key="0" />
                   {jobs
                     ? jobs.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="job-history-department">Department</Label>
-                <AvInput id="job-history-department" type="select" className="form-control" name="department.id">
-                  <option value="" key="0" />
-                  {departments
-                    ? departments.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -186,7 +153,6 @@ export const JobHistoryUpdate = (props: IJobHistoryUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   jobs: storeState.job.entities,
-  departments: storeState.department.entities,
   employees: storeState.employee.entities,
   jobHistoryEntity: storeState.jobHistory.entity,
   loading: storeState.jobHistory.loading,
@@ -196,7 +162,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getJobs,
-  getDepartments,
   getEmployees,
   getEntity,
   updateEntity,
